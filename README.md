@@ -1,6 +1,6 @@
 # Borrar Archivos Viejos
 
-Este script en Python elimina archivos que superan un cierto número de días en un directorio específico.
+Este script en Python elimina archivos que superan un cierto número de días sin abrirse en un directorio específico.
 Está diseñado para ser ejecutado manualmente o mediante un cron job en sistemas Linux/macOS.
 
 ---

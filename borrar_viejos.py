@@ -25,7 +25,7 @@ limite = ahora - (DIAS * 86400)  # 86400 segundos = 1 día
 # ----------------------
 with os.scandir(DIR) as it:
     for entry in it:
-        if entry.is_file() and entry.stat().st_mtime < limite:
+        if entry.is_file() and entry.stat().st_atime < limite:
             try:
                 os.remove(entry.path)
                 print(f"Eliminado: {entry.path}")
