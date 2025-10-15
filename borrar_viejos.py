@@ -2,6 +2,8 @@
 import os
 import time
 import argparse
+import fnmatch
+
 
 # ----------------------
 # Configuración por argumentos
@@ -9,10 +11,12 @@ import argparse
 parser = argparse.ArgumentParser(description="Borrar archivos viejos en un directorio")
 parser.add_argument("-d", "--dir", required=True, help="Directorio a limpiar")
 parser.add_argument("-t", "--dias", type=int, required=True, help="Número de días para conservar archivos")
+parser.add_argument("--pattern", help="Patrón opcional de archivos a borrar (ej. 'concatenated-*')")
 args = parser.parse_args()
 
-DIR = args.dir
-DIAS = args.dias
+DIR     = args.dir
+DIAS    = args.dias
+PATTERN = args.pattern
 
 # ----------------------
 # Cálculo de tiempo límite
@@ -25,7 +29,7 @@ limite = ahora - (DIAS * 86400)  # 86400 segundos = 1 día
 # ----------------------
 with os.scandir(DIR) as it:
     for entry in it:
-        if entry.is_file() and entry.stat().st_atime < limite:
+        if PATTERN is None or fnmatch.fnmatch(entry.name, PATTERN):
             try:
                 os.remove(entry.path)
                 print(f"Eliminado: {entry.path}")
